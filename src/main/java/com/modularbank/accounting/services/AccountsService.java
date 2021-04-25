@@ -1,5 +1,7 @@
 package com.modularbank.accounting.services;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -30,8 +32,13 @@ public class AccountsService {
 	AccountPublisher publisher;
 
 	public Account getAccountById(Long accountId) throws AccountException {
+		Instant start = Instant.now();
+
 		Account account = accountsRepository.findById(accountId)
-				.orElseThrow(() -> new AccountException("Account with customerId" + accountId + "does not exist"));
+				.orElseThrow(() -> new AccountException("Account with accountId" + accountId + "does not exist"));
+
+		Instant finish = Instant.now();
+		System.out.println("DB Operation getAccountById time: " + Duration.between(start, finish).toMillis());
 
 		// accountMapper.getAccountByCustomerId(customerId);
 

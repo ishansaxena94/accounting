@@ -47,7 +47,7 @@ public class AccountsController {
 
 	}
 
-	@GetMapping("/get/{customerId}")
+	@GetMapping("/get/{accountId}")
 	public ResponseEntity getAccount(@PathVariable Long accountId) {
 
 		if (0 == accountId || null == accountId)
