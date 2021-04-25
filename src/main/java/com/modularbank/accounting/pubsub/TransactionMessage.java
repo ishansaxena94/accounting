@@ -2,6 +2,8 @@ package com.modularbank.accounting.pubsub;
 
 import java.util.Date;
 
+import com.modularbank.accounting.model.Transaction;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,9 +11,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CustomMessage {
+public class TransactionMessage {
 
 	private String messageId;
-	private String message;
 	private Date messageDate;
+	private String operationType;
+	private Transaction transaction;
 }

@@ -13,37 +13,36 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class MQConfig {
+public class TxnMQConfig {
 
-	public static final String ACC_QUEUE = "account_ops";
-	public static final String ACC_EXCHANGE = "account_exchange";
-	public static final String ACC_ROUTING_KEY = "acc_routing_key";
+	public static final String TXN_QUEUE = "txn_ops";
+	public static final String TXN_EXCHANGE = "txn_exchange";
+	public static final String TXN_ROUTING_KEY = "txn_routing_key";
 
 	@Bean
-	public Queue queue() {
-		return new Queue(ACC_QUEUE);
+	public Queue txnQueue() {
+		return new Queue(TXN_QUEUE);
 	}
 
 	@Bean
-	public TopicExchange topicExchange() {
-		return new TopicExchange(ACC_EXCHANGE);
+	public TopicExchange txnTopicExchange() {
+		return new TopicExchange(TXN_EXCHANGE);
 	}
 
 	@Bean
-	public Binding binding(Queue queue, TopicExchange topicExchange) {
-		return BindingBuilder.bind(queue).to(topicExchange).with(ACC_ROUTING_KEY);
+	public Binding txnBinding(Queue queue, TopicExchange topicExchange) {
+		return BindingBuilder.bind(queue).to(topicExchange).with(TXN_ROUTING_KEY);
 	}
 
 	@Bean
-	public MessageConverter messageConverter() {
+	public MessageConverter txnMessageConverter() {
 		return new Jackson2JsonMessageConverter();
 	}
 
 	@Bean
-	public AmqpTemplate template(ConnectionFactory connectionFactory) {
+	public AmqpTemplate txnTemplate(ConnectionFactory connectionFactory) {
 		RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
-		rabbitTemplate.setMessageConverter(messageConverter());
+		rabbitTemplate.setMessageConverter(txnMessageConverter());
 		return rabbitTemplate;
 	}
-
 }

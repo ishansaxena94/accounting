@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.modularbank.accounting.configurations.MQConfig;
-import com.modularbank.accounting.pubsub.CustomMessage;
+import com.modularbank.accounting.pubsub.AccountMessage;
 
 @RestController
 public class ProducerController {
@@ -23,13 +23,13 @@ public class ProducerController {
 		String greeting = "Hello, Ishan: " + i + "!";
 		i++;
 
-		CustomMessage msg = new CustomMessage();
+		AccountMessage msg = new AccountMessage();
 		msg.setMessageId(UUID.randomUUID().toString());
-		msg.setMessage(greeting);
+		// msg.setMessage(greeting);
 		msg.setMessageDate(new Date());
 
 		System.out.println("Publishing: " + greeting);
-		rabbitTemplate.convertAndSend(MQConfig.EXCHANGE_NAME, MQConfig.ACC_ROUTING_KEY, msg);
+		rabbitTemplate.convertAndSend(MQConfig.ACC_EXCHANGE, MQConfig.ACC_ROUTING_KEY, msg);
 		System.out.println("Published: " + greeting);
 	}
 
