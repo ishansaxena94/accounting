@@ -65,7 +65,7 @@ public class AccountsController {
 		return ResponseEntity.ok(responseBody);
 	}
 
-	@GetMapping("/")
+	@GetMapping("/*")
 	public ResponseEntity base() {
 		return ResponseEntity.ok("Welcome to Modular Bank");
 

@@ -1,7 +1,6 @@
 package com.modularbank.accounting.validators;
 
 import com.google.common.base.Preconditions;
-import com.modularbank.accounting.configurations.AccountConfig;
 import com.modularbank.accounting.configurations.TransactionConfig;
 import com.modularbank.accounting.requests.CreateTransactionRequest;
 
@@ -18,8 +17,7 @@ public class TransactionValidator {
 		Preconditions.checkArgument(TransactionConfig.transctionDirection.contains(request.getDirection()),
 				"Invalid Direction");
 
-		String msg = "Supported currencies are: " + String.join(", ", AccountConfig.supportedCurrencies);
-		Preconditions.checkArgument(AccountConfig.supportedCurrencies.contains(request.getCurrency()), msg);
+		CurrencyValidator.validateTransaction(request);
 
 	}
 }
